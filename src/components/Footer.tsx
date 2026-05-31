@@ -1,5 +1,9 @@
+'use client';
+
 import Link from 'next/link';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
+import { useSiteSettings } from './ThemeProvider';
 import type { Locale } from '@/i18n';
 
 interface FooterProps {
@@ -8,6 +12,7 @@ interface FooterProps {
 
 export default function Footer({ locale }: FooterProps) {
   const t = useTranslations();
+  const { logoText, logoImageUrl, siteName } = useSiteSettings();
   const year = new Date().getFullYear();
 
   return (
@@ -17,10 +22,14 @@ export default function Footer({ locale }: FooterProps) {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, var(--color-primary), var(--color-secondary))' }}>
-                <span className="text-white font-bold text-sm">D</span>
-              </div>
-              <span className="text-text-base font-bold text-lg">DevStudio</span>
+              {logoImageUrl ? (
+                <Image src={logoImageUrl} alt={logoText} width={32} height={32} className="rounded-lg object-contain" />
+              ) : (
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, var(--color-primary), var(--color-secondary))' }}>
+                  <span className="text-white font-bold text-sm">{logoText.charAt(0).toUpperCase()}</span>
+                </div>
+              )}
+              <span className="text-text-base font-bold text-lg">{logoText}</span>
             </div>
             <p className="text-text-muted text-sm">{t('footer.tagline')}</p>
           </div>
@@ -79,7 +88,7 @@ export default function Footer({ locale }: FooterProps) {
 
         <div className="mt-8 pt-8 border-t border-white/10 text-center">
           <p className="text-text-muted text-sm">
-            &copy; {year} DevStudio. {t('footer.rights')}
+            &copy; {year} {siteName}. {t('footer.rights')}
           </p>
         </div>
       </div>
