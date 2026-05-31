@@ -8,6 +8,7 @@ type AnimationVariant = 'none' | 'fade' | 'slide' | 'scale' | 'bounce';
 
 interface SettingsForm {
   logoText: string;
+  logoImageUrl: string;
   siteName: string;
   siteTagline: string;
   colorPrimary: string;
@@ -22,6 +23,7 @@ interface SettingsForm {
 
 const defaultSettings: SettingsForm = {
   logoText: 'DevStudio',
+  logoImageUrl: '',
   siteName: 'DevStudio',
   siteTagline: 'Professional Software Development',
   colorPrimary: '#6366f1',
@@ -74,6 +76,7 @@ export default function AdminSettingsPage() {
       .then((data) => {
         setForm({
           logoText: data.logoText ?? defaultSettings.logoText,
+          logoImageUrl: data.logoImageUrl ?? defaultSettings.logoImageUrl,
           siteName: data.siteName ?? defaultSettings.siteName,
           siteTagline: data.siteTagline ?? defaultSettings.siteTagline,
           colorPrimary: data.colorPrimary ?? defaultSettings.colorPrimary,
@@ -149,6 +152,33 @@ export default function AdminSettingsPage() {
           <section className="bg-white/5 border border-white/10 rounded-xl p-6">
             <h2 className="text-lg font-semibold text-white mb-4">Brand &amp; Logo</h2>
             <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-400 mb-1.5">Logo Image URL</label>
+                <div className="flex items-center gap-3">
+                  {form.logoImageUrl && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={form.logoImageUrl} alt="Logo preview" className="w-10 h-10 rounded-lg object-contain bg-white/5 border border-white/10" />
+                  )}
+                  <input
+                    type="url"
+                    value={form.logoImageUrl}
+                    placeholder="https://example.com/logo.png (leave empty to use text)"
+                    onChange={(e) => handleChange('logoImageUrl', e.target.value)}
+                    className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-indigo-500 transition-colors placeholder:text-slate-600"
+                  />
+                  {form.logoImageUrl && (
+                    <button
+                      type="button"
+                      onClick={() => handleChange('logoImageUrl', '')}
+                      className="text-slate-400 hover:text-white px-2 py-2"
+                      title="Remove logo image"
+                    >
+                      ✕
+                    </button>
+                  )}
+                </div>
+                <p className="text-xs text-slate-500 mt-1">If set, the image will be shown instead of the colored icon.</p>
+              </div>
               <div>
                 <label className="block text-sm font-medium text-slate-400 mb-1.5">Logo Text</label>
                 <input

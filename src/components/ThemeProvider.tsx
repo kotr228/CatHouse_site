@@ -11,6 +11,7 @@ interface SiteSettings {
   colorText: string;
   colorTextMuted: string;
   logoText: string;
+  logoImageUrl?: string | null;
   siteName: string;
   siteTagline: string;
 }
@@ -24,6 +25,7 @@ const SiteSettingsContext = createContext<SiteSettings>({
   colorText: '#f8fafc',
   colorTextMuted: '#94a3b8',
   logoText: 'DevStudio',
+  logoImageUrl: null,
   siteName: 'DevStudio',
   siteTagline: 'Professional Software Development',
 });

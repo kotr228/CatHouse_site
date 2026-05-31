@@ -35,6 +35,7 @@ async function getSettings() {
       colorText: settings.colorText,
       colorTextMuted: settings.colorTextMuted,
       logoText: settings.logoText,
+      logoImageUrl: settings.logoImageUrl,
       siteName: settings.siteName,
       siteTagline: settings.siteTagline,
     };
