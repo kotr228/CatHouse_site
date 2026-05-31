@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { SessionProvider } from './SessionProvider';
-import '../../globals.css';
 
 export const metadata: Metadata = {
   title: 'Admin — DevStudio',
@@ -9,10 +8,8 @@ export const metadata: Metadata = {
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className="bg-slate-950 text-white antialiased min-h-screen">
-        <SessionProvider>{children}</SessionProvider>
-      </body>
-    </html>
+    <div className="min-h-screen" style={{ backgroundColor: '#0f172a', color: '#f8fafc' }}>
+      <SessionProvider>{children}</SessionProvider>
+    </div>
   );
 }
