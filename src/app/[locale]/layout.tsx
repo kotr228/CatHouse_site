@@ -20,14 +20,26 @@ export async function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
+async function getSiteName(): Promise<string> {
+  try {
+    const s = await prisma.siteSettings.findUnique({ where: { id: 'singleton' } });
+    return s?.siteName || 'DevStudio';
+  } catch {
+    return process.env.NEXT_PUBLIC_SITE_NAME || 'DevStudio';
+  }
+}
+
 export async function generateMetadata({ params: { locale } }: LayoutProps): Promise<Metadata> {
-  const t = await getTranslations({ locale, namespace: 'meta' });
+  const [t, siteName] = await Promise.all([
+    getTranslations({ locale, namespace: 'meta' }),
+    getSiteName(),
+  ]);
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://cathouse-site.onrender.com';
 
   return {
     title: {
-      default: t('homeTitle'),
-      template: '%s | DevStudio',
+      default: siteName,
+      template: `%s | ${siteName}`,
     },
     description: t('homeDescription'),
     metadataBase: new URL(siteUrl),
@@ -40,13 +52,13 @@ export async function generateMetadata({ params: { locale } }: LayoutProps): Pro
     openGraph: {
       type: 'website',
       locale,
-      siteName: 'DevStudio',
-      title: t('homeTitle'),
+      siteName,
+      title: siteName,
       description: t('homeDescription'),
     },
     twitter: {
       card: 'summary_large_image',
-      title: t('homeTitle'),
+      title: siteName,
       description: t('homeDescription'),
     },
     robots: {
@@ -62,14 +74,15 @@ export default async function LocaleLayout({ children, params: { locale } }: Lay
 
   const messages = await getMessages();
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://cathouse-site.onrender.com';
-  const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'DevStudio';
 
   let animationVariant = 'fade';
+  let siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'DevStudio';
   try {
     const settings = await prisma.siteSettings.findUnique({ where: { id: 'singleton' } });
     if (settings?.animationVariant) animationVariant = settings.animationVariant;
+    if (settings?.siteName) siteName = settings.siteName;
   } catch {
-    // Use default
+    // Use defaults
   }
 
   return (
