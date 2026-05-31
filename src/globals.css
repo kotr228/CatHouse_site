@@ -58,3 +58,24 @@
 .anim-bounce { animation: bounceIn 0.8s ease forwards; }
 .anim-none { opacity: 1; }
 .anim-hidden { opacity: 0; }
+
+/* Service card — CSS-only hover (no JS event handlers) */
+.service-card {
+  background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.service-card:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 10px 30px -5px color-mix(in srgb, var(--color-primary) 20%, transparent);
+}
+.service-card__price {
+  background-color: color-mix(in srgb, var(--color-primary) 15%, transparent);
+  border-color: color-mix(in srgb, var(--color-primary) 30%, transparent);
+  color: var(--color-primary);
+}
+.service-card__glow {
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--color-primary) 5%, transparent),
+    color-mix(in srgb, var(--color-secondary) 5%, transparent)
+  );
+}
