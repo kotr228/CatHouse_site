@@ -14,6 +14,9 @@ const defaultSettings = {
   colorBgCard: '#0f172a',
   colorText: '#f8fafc',
   colorTextMuted: '#94a3b8',
+  logoText: 'DevStudio',
+  siteName: 'DevStudio',
+  siteTagline: 'Professional Software Development',
 };
 
 async function getSettings() {
@@ -31,6 +34,9 @@ async function getSettings() {
       colorBgCard: settings.colorBgCard,
       colorText: settings.colorText,
       colorTextMuted: settings.colorTextMuted,
+      logoText: settings.logoText,
+      siteName: settings.siteName,
+      siteTagline: settings.siteTagline,
     };
   } catch {
     return defaultSettings;

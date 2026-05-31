@@ -1,8 +1,8 @@
 'use client';
 
-import type { ReactNode } from 'react';
+import { createContext, useContext, type ReactNode } from 'react';
 
-interface SiteSettingsTheme {
+interface SiteSettings {
   colorPrimary: string;
   colorSecondary: string;
   colorAccent: string;
@@ -10,14 +10,29 @@ interface SiteSettingsTheme {
   colorBgCard: string;
   colorText: string;
   colorTextMuted: string;
+  logoText: string;
+  siteName: string;
+  siteTagline: string;
 }
 
-interface ThemeProviderProps {
-  settings: SiteSettingsTheme;
-  children: ReactNode;
+const SiteSettingsContext = createContext<SiteSettings>({
+  colorPrimary: '#6366f1',
+  colorSecondary: '#8b5cf6',
+  colorAccent: '#06b6d4',
+  colorBg: '#020617',
+  colorBgCard: '#0f172a',
+  colorText: '#f8fafc',
+  colorTextMuted: '#94a3b8',
+  logoText: 'DevStudio',
+  siteName: 'DevStudio',
+  siteTagline: 'Professional Software Development',
+});
+
+export function useSiteSettings() {
+  return useContext(SiteSettingsContext);
 }
 
-export function ThemeProvider({ settings, children }: ThemeProviderProps) {
+export function ThemeProvider({ settings, children }: { settings: SiteSettings; children: ReactNode }) {
   const cssVars = `
     :root {
       --color-primary: ${settings.colorPrimary};
@@ -35,9 +50,9 @@ export function ThemeProvider({ settings, children }: ThemeProviderProps) {
   `;
 
   return (
-    <>
+    <SiteSettingsContext.Provider value={settings}>
       <style dangerouslySetInnerHTML={{ __html: cssVars }} />
       {children}
-    </>
+    </SiteSettingsContext.Provider>
   );
 }
