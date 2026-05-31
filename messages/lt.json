@@ -1,0 +1,84 @@
+{
+  "nav": {
+    "home": "Pradžia",
+    "services": "Paslaugos",
+    "pricing": "Kainos",
+    "contact": "Kontaktai"
+  },
+  "hero": {
+    "title": "Profesionali programinės įrangos kūryba",
+    "subtitle": "Kuriame greitas, keičiamo dydžio ir SEO optimizuotas žiniatinklio bei mobilias programas, pritaikytas jūsų verslo poreikiams.",
+    "cta": "Gauti nemokamą pasiūlymą",
+    "ctaSecondary": "Peržiūrėti paslaugas"
+  },
+  "services": {
+    "title": "Mūsų paslaugos",
+    "subtitle": "Pilno ciklo programinės įrangos kūrimas jūsų verslui",
+    "learnMore": "Sužinoti daugiau",
+    "allServices": "Visos paslaugos"
+  },
+  "pricing": {
+    "title": "Skaidrios kainos",
+    "subtitle": "Pasirinkite planą, tinkantį jūsų projektui",
+    "from": "nuo",
+    "perProject": "už projektą",
+    "perMonth": "per mėnesį",
+    "getStarted": "Pradėti",
+    "mostPopular": "Populiariausias"
+  },
+  "contact": {
+    "title": "Pradėkite savo projektą",
+    "subtitle": "Papasakokite mums apie savo idėją ir susisieksime su jumis per 24 valandas.",
+    "name": "Jūsų vardas",
+    "email": "El. pašto adresas",
+    "phone": "Telefono numeris (neprivaloma)",
+    "description": "Projekto aprašymas",
+    "descriptionPlaceholder": "Apibūdinkite savo projektą, tikslus, terminus ir konkrečius reikalavimus...",
+    "submit": "Siųsti užklausą",
+    "sending": "Siunčiama...",
+    "success": "Ačiū! Netrukus susisieksime su jumis.",
+    "error": "Kažkas nutiko. Bandykite dar kartą."
+  },
+  "footer": {
+    "rights": "Visos teisės saugomos.",
+    "tagline": "Kuriame skaitmenines produktus, kurie yra svarbūs.",
+    "links": "Greitos nuorodos",
+    "connect": "Susisiekti"
+  },
+  "admin": {
+    "dashboard": "Valdymo skydelis",
+    "orders": "Užsakymai",
+    "services": "Paslaugos",
+    "logout": "Atsijungti",
+    "login": "Prisijungti",
+    "loginTitle": "Administratoriaus prisijungimas",
+    "email": "El. paštas",
+    "password": "Slaptažodis",
+    "loginButton": "Prisijungti",
+    "totalOrders": "Iš viso užsakymų",
+    "newOrders": "Nauji užsakymai",
+    "inProgress": "Vykdoma",
+    "completed": "Baigta",
+    "status": "Statusas",
+    "name": "Vardas",
+    "createdAt": "Sukurta",
+    "actions": "Veiksmai",
+    "updateStatus": "Atnaujinti statusą"
+  },
+  "meta": {
+    "homeTitle": "DevStudio — Profesionali programinės įrangos kūryba",
+    "homeDescription": "Kuriame greitas, keičiamo dydžio žiniatinklio ir mobilias programas. Next.js, React, Node.js, PostgreSQL. Gaukite nemokamą pasiūlymą šiandien.",
+    "servicesTitle": "Paslaugos — DevStudio",
+    "servicesDescription": "Peržiūrėkite visą mūsų programinės įrangos kūrimo paslaugų asortimentą: žiniatinklio programos, mobilios programos, API ir daugiau.",
+    "pricingTitle": "Kainos — DevStudio",
+    "pricingDescription": "Skaidrios programinės įrangos kūrimo paslaugų kainos. Jokių paslėptų mokesčių.",
+    "contactTitle": "Kontaktai — DevStudio",
+    "contactDescription": "Pradėkite savo projektą šiandien. Užpildykite formą ir gaukite nemokamą konsultaciją."
+  },
+  "stats": {
+    "projects": "Įgyvendintų projektų",
+    "clients": "Patenkintų klientų",
+    "years": "Metų patirties",
+    "uptime": "Veikimo SLA"
+  }
+}

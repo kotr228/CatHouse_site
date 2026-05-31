@@ -1,0 +1,84 @@
+{
+  "nav": {
+    "home": "Strona główna",
+    "services": "Usługi",
+    "pricing": "Cennik",
+    "contact": "Kontakt"
+  },
+  "hero": {
+    "title": "Profesjonalne tworzenie oprogramowania",
+    "subtitle": "Tworzymy szybkie, skalowalne i zoptymalizowane pod kątem SEO aplikacje webowe i mobilne dostosowane do Twoich potrzeb biznesowych.",
+    "cta": "Uzyskaj bezpłatną wycenę",
+    "ctaSecondary": "Zobacz usługi"
+  },
+  "services": {
+    "title": "Nasze usługi",
+    "subtitle": "Kompleksowe tworzenie oprogramowania dla Twojego biznesu",
+    "learnMore": "Dowiedz się więcej",
+    "allServices": "Wszystkie usługi"
+  },
+  "pricing": {
+    "title": "Przejrzyste ceny",
+    "subtitle": "Wybierz plan odpowiedni dla Twojego projektu",
+    "from": "od",
+    "perProject": "za projekt",
+    "perMonth": "miesięcznie",
+    "getStarted": "Rozpocznij",
+    "mostPopular": "Najpopularniejszy"
+  },
+  "contact": {
+    "title": "Rozpocznij swój projekt",
+    "subtitle": "Opowiedz nam o swoim pomyśle, a odezwiemy się do Ciebie w ciągu 24 godzin.",
+    "name": "Twoje imię i nazwisko",
+    "email": "Adres e-mail",
+    "phone": "Numer telefonu (opcjonalnie)",
+    "description": "Opis projektu",
+    "descriptionPlaceholder": "Opisz swój projekt, cele, harmonogram i wszelkie szczególne wymagania...",
+    "submit": "Wyślij zapytanie",
+    "sending": "Wysyłanie...",
+    "success": "Dziękujemy! Skontaktujemy się z Tobą wkrótce.",
+    "error": "Coś poszło nie tak. Spróbuj ponownie."
+  },
+  "footer": {
+    "rights": "Wszelkie prawa zastrzeżone.",
+    "tagline": "Budujemy produkty cyfrowe, które mają znaczenie.",
+    "links": "Szybkie linki",
+    "connect": "Połącz się"
+  },
+  "admin": {
+    "dashboard": "Panel administracyjny",
+    "orders": "Zamówienia",
+    "services": "Usługi",
+    "logout": "Wyloguj",
+    "login": "Zaloguj",
+    "loginTitle": "Logowanie administratora",
+    "email": "E-mail",
+    "password": "Hasło",
+    "loginButton": "Zaloguj się",
+    "totalOrders": "Łączna liczba zamówień",
+    "newOrders": "Nowe zamówienia",
+    "inProgress": "W trakcie",
+    "completed": "Zakończone",
+    "status": "Status",
+    "name": "Nazwa",
+    "createdAt": "Data utworzenia",
+    "actions": "Akcje",
+    "updateStatus": "Aktualizuj status"
+  },
+  "meta": {
+    "homeTitle": "DevStudio — Profesjonalne tworzenie oprogramowania",
+    "homeDescription": "Tworzymy szybkie, skalowalne aplikacje webowe i mobilne. Next.js, React, Node.js, PostgreSQL. Uzyskaj bezpłatną wycenę już dziś.",
+    "servicesTitle": "Usługi — DevStudio",
+    "servicesDescription": "Poznaj naszą pełną ofertę usług tworzenia oprogramowania: aplikacje webowe, mobilne, API i wiele więcej.",
+    "pricingTitle": "Cennik — DevStudio",
+    "pricingDescription": "Przejrzyste ceny za usługi tworzenia oprogramowania. Brak ukrytych opłat.",
+    "contactTitle": "Kontakt — DevStudio",
+    "contactDescription": "Rozpocznij swój projekt już dziś. Wypełnij formularz i uzyskaj bezpłatną konsultację."
+  },
+  "stats": {
+    "projects": "Zrealizowanych projektów",
+    "clients": "Zadowolonych klientów",
+    "years": "Lat doświadczenia",
+    "uptime": "SLA dostępności"
+  }
+}
