@@ -50,7 +50,7 @@ export default async function PricingPage({ params: { locale } }: PageProps) {
 
       {/* Pricing grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {services.map((service, index) => {
+        {(services as typeof services).map((service: typeof services[number], index: number) => {
           const translation = service.translations[0];
           const price = service.prices[0];
           if (!translation || !price) return null;

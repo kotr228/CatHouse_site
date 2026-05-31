@@ -92,7 +92,7 @@ export default async function HomePage({ params: { locale } }: PageProps) {
   let blockMap: Record<string, boolean> = {};
   try {
     const blocks = await prisma.pageBlock.findMany();
-    blockMap = Object.fromEntries(blocks.map((b) => [b.id, b.isVisible]));
+    blockMap = Object.fromEntries(blocks.map((b: { id: string; isVisible: boolean }) => [b.id, b.isVisible]));
   } catch {
     // All visible by default
   }
@@ -222,7 +222,7 @@ export default async function HomePage({ params: { locale } }: PageProps) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map((service, index) => {
+            {(services as typeof services).map((service: typeof services[number], index: number) => {
               const translation = service.translations[0];
               if (!translation) return null;
               const price = service.prices[0];

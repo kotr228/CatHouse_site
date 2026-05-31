@@ -19,11 +19,13 @@ export default async function AdminOrdersPage() {
     }),
   ]);
 
-  const statMap = Object.fromEntries(stats.map((s) => [s.status, s._count.id]));
+  const statMap = Object.fromEntries(
+    stats.map((s: { status: string; _count: { id: number } }) => [s.status, s._count.id])
+  );
 
   return (
     <AdminOrdersClient
-      orders={orders.map((o) => ({
+      orders={orders.map((o: typeof orders[number]) => ({
         ...o,
         createdAt: o.createdAt.toISOString(),
         updatedAt: o.updatedAt.toISOString(),

@@ -47,7 +47,7 @@ export default async function ServicesPage({ params: { locale } }: PageProps) {
 
       {/* Services list */}
       <div className="space-y-12">
-        {services.map((service, index) => {
+        {(services as typeof services).map((service: typeof services[number], index: number) => {
           const translation = service.translations[0];
           const price = service.prices[0];
           if (!translation) return null;
@@ -90,7 +90,7 @@ export default async function ServicesPage({ params: { locale } }: PageProps) {
                 <p className="text-text-muted mb-6 leading-relaxed">{translation.description}</p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-6">
-                  {translation.features.map((feature) => (
+                  {translation.features.map((feature: string) => (
                     <div key={feature} className="flex items-center gap-2 text-sm text-text-base">
                       <svg
                         className="w-4 h-4 flex-shrink-0"
