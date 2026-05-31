@@ -144,10 +144,11 @@ export default function AdminOrdersClient({ orders: initialOrders, stats }: Admi
             )}
           </div>
         </div>
-      </div>
 
       {/* Order detail modal */}
-      {selected && (
+      {selected != null && (() => {
+        const s = selected;
+        return (
         <div
           className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
           onClick={() => setSelected(null)}
@@ -157,7 +158,7 @@ export default function AdminOrdersClient({ orders: initialOrders, stats }: Admi
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-start mb-4">
-              <h2 className="text-lg font-bold text-white">{selected.name}</h2>
+              <h2 className="text-lg font-bold text-white">{s.name}</h2>
               <button onClick={() => setSelected(null)} className="text-gray-400 hover:text-white">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -165,38 +166,39 @@ export default function AdminOrdersClient({ orders: initialOrders, stats }: Admi
               </button>
             </div>
             <div className="space-y-3 text-sm">
-              <div><span className="text-gray-400">Email:</span> <span className="text-white ml-2">{selected.email}</span></div>
-              {selected.phone && <div><span className="text-gray-400">Phone:</span> <span className="text-white ml-2">{selected.phone}</span></div>}
-              <div><span className="text-gray-400">Locale:</span> <span className="text-white ml-2 uppercase">{selected.locale}</span></div>
+              <div><span className="text-gray-400">Email:</span> <span className="text-white ml-2">{s.email}</span></div>
+              {s.phone && <div><span className="text-gray-400">Phone:</span> <span className="text-white ml-2">{s.phone}</span></div>}
+              <div><span className="text-gray-400">Locale:</span> <span className="text-white ml-2 uppercase">{s.locale}</span></div>
               <div><span className="text-gray-400">Status:</span>
-                <span className={`ml-2 text-xs font-medium px-2 py-0.5 rounded-full border ${statusColors[selected.status]}`}>
-                  {statusLabels[selected.status]}
+                <span className={`ml-2 text-xs font-medium px-2 py-0.5 rounded-full border ${statusColors[s.status]}`}>
+                  {statusLabels[s.status]}
                 </span>
               </div>
               <div>
                 <span className="text-gray-400 block mb-1">Description:</span>
-                <p className="text-white bg-white/5 rounded-lg p-3 leading-relaxed">{selected.description}</p>
+                <p className="text-white bg-white/5 rounded-lg p-3 leading-relaxed">{s.description}</p>
               </div>
-              <div><span className="text-gray-400">Date:</span> <span className="text-white ml-2">{new Date(selected.createdAt).toLocaleString()}</span></div>
+              <div><span className="text-gray-400">Date:</span> <span className="text-white ml-2">{new Date(s.createdAt).toLocaleString()}</span></div>
             </div>
             <div className="mt-4">
               <label className="block text-sm text-gray-400 mb-2">Update Status</label>
               <select
-                value={selected.status}
-                disabled={updating === selected.id}
-                onChange={(e) => updateStatus(selected.id, e.target.value as OrderStatus)}
+                value={s.status}
+                disabled={updating === s.id}
+                onChange={(e) => updateStatus(s.id, e.target.value as OrderStatus)}
                 className="w-full bg-white/5 border border-white/10 rounded-xl text-white px-3 py-2 focus:outline-none focus:border-brand-500 disabled:opacity-50"
               >
-                {(['NEW', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED'] as OrderStatus[]).map((s) => (
-                  <option key={s} value={s} className="bg-navy-900">
-                    {statusLabels[s]}
+                {(['NEW', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED'] as OrderStatus[]).map((st) => (
+                  <option key={st} value={st} className="bg-navy-900">
+                    {statusLabels[st]}
                   </option>
                 ))}
               </select>
             </div>
           </div>
         </div>
-      )}
+        );
+      })()}
     </div>
   );
 }
