@@ -19,6 +19,14 @@ interface SettingsForm {
   colorText: string;
   colorTextMuted: string;
   animationVariant: AnimationVariant;
+  contactEmail: string;
+  contactEmailVisible: boolean;
+  contactTelegram: string;
+  contactTelegramVisible: boolean;
+  contactViber: string;
+  contactViberVisible: boolean;
+  contactWhatsapp: string;
+  contactWhatsappVisible: boolean;
 }
 
 const defaultSettings: SettingsForm = {
@@ -34,6 +42,14 @@ const defaultSettings: SettingsForm = {
   colorText: '#f8fafc',
   colorTextMuted: '#94a3b8',
   animationVariant: 'fade',
+  contactEmail: '',
+  contactEmailVisible: true,
+  contactTelegram: '',
+  contactTelegramVisible: true,
+  contactViber: '',
+  contactViberVisible: false,
+  contactWhatsapp: '',
+  contactWhatsappVisible: false,
 };
 
 const animationOptions: { value: AnimationVariant; label: string }[] = [
@@ -89,6 +105,14 @@ export default function AdminSettingsPage() {
           colorText: data.colorText ?? defaultSettings.colorText,
           colorTextMuted: data.colorTextMuted ?? defaultSettings.colorTextMuted,
           animationVariant: data.animationVariant ?? defaultSettings.animationVariant,
+          contactEmail: data.contactEmail ?? defaultSettings.contactEmail,
+          contactEmailVisible: data.contactEmailVisible ?? defaultSettings.contactEmailVisible,
+          contactTelegram: data.contactTelegram ?? defaultSettings.contactTelegram,
+          contactTelegramVisible: data.contactTelegramVisible ?? defaultSettings.contactTelegramVisible,
+          contactViber: data.contactViber ?? defaultSettings.contactViber,
+          contactViberVisible: data.contactViberVisible ?? defaultSettings.contactViberVisible,
+          contactWhatsapp: data.contactWhatsapp ?? defaultSettings.contactWhatsapp,
+          contactWhatsappVisible: data.contactWhatsappVisible ?? defaultSettings.contactWhatsappVisible,
         });
         setLoading(false);
       })
@@ -105,7 +129,7 @@ export default function AdminSettingsPage() {
 
   if (!session) return null;
 
-  const handleChange = (key: keyof SettingsForm, value: string) => {
+  const handleChange = (key: keyof SettingsForm, value: string | boolean) => {
     setForm((prev) => ({ ...prev, [key]: value }));
   };
 
@@ -306,6 +330,42 @@ export default function AdminSettingsPage() {
                   ))}
                 </div>
               </div>
+            </div>
+          </section>
+
+          {/* Contacts */}
+          <section className="bg-white/5 border border-white/10 rounded-xl p-6">
+            <h2 className="text-lg font-semibold text-white mb-4">Contact Info</h2>
+            <div className="space-y-4">
+              {([
+                { key: 'contactEmail', visKey: 'contactEmailVisible', label: 'Email', placeholder: 'hello@example.com', type: 'email' },
+                { key: 'contactTelegram', visKey: 'contactTelegramVisible', label: 'Telegram', placeholder: '@username or https://t.me/username', type: 'text' },
+                { key: 'contactViber', visKey: 'contactViberVisible', label: 'Viber', placeholder: '+380XXXXXXXXX', type: 'text' },
+                { key: 'contactWhatsapp', visKey: 'contactWhatsappVisible', label: 'WhatsApp', placeholder: '+380XXXXXXXXX', type: 'text' },
+              ] as const).map(({ key, visKey, label, placeholder, type }) => (
+                <div key={key} className="flex items-center gap-3">
+                  <div className="flex-1">
+                    <label className="block text-sm font-medium text-slate-400 mb-1.5">{label}</label>
+                    <input
+                      type={type}
+                      value={form[key]}
+                      placeholder={placeholder}
+                      onChange={(e) => handleChange(key, e.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-indigo-500 transition-colors placeholder:text-slate-600"
+                    />
+                  </div>
+                  <div className="flex-shrink-0 mt-5">
+                    <button
+                      type="button"
+                      onClick={() => handleChange(visKey, !form[visKey])}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${form[visKey] ? 'bg-indigo-600' : 'bg-white/10'}`}
+                      title={form[visKey] ? 'Visible' : 'Hidden'}
+                    >
+                      <span className={`inline-block h-4 w-4 rounded-full bg-white shadow transition-transform ${form[visKey] ? 'translate-x-6' : 'translate-x-1'}`} />
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
           </section>
 

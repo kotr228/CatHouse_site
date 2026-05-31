@@ -26,30 +26,26 @@ export async function PATCH(request: NextRequest) {
   try {
     const body = await request.json();
 
-    // Whitelist allowed fields
-    const allowedFields = [
-      'logoText',
-      'logoImageUrl',
-      'siteName',
-      'siteTagline',
-      'colorPrimary',
-      'colorSecondary',
-      'colorAccent',
-      'colorBg',
-      'colorBgCard',
-      'colorText',
-      'colorTextMuted',
-      'bgType',
-      'animationVariant',
+    const stringFields = [
+      'logoText', 'logoImageUrl', 'siteName', 'siteTagline',
+      'colorPrimary', 'colorSecondary', 'colorAccent',
+      'colorBg', 'colorBgCard', 'colorText', 'colorTextMuted',
+      'bgType', 'animationVariant',
+      'contactEmail', 'contactTelegram', 'contactViber', 'contactWhatsapp',
     ] as const;
 
-    type AllowedField = typeof allowedFields[number];
-    const data: Partial<Record<AllowedField, string>> = {};
+    const boolFields = [
+      'contactEmailVisible', 'contactTelegramVisible',
+      'contactViberVisible', 'contactWhatsappVisible',
+    ] as const;
 
-    for (const field of allowedFields) {
-      if (body[field] !== undefined) {
-        data[field] = body[field];
-      }
+    const data: Record<string, string | boolean> = {};
+
+    for (const field of stringFields) {
+      if (body[field] !== undefined) data[field] = body[field];
+    }
+    for (const field of boolFields) {
+      if (body[field] !== undefined) data[field] = Boolean(body[field]);
     }
 
     const settings = await prisma.siteSettings.upsert({

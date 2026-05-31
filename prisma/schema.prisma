@@ -96,6 +96,15 @@ model SiteSettings {
   bgType           String   @default("gradient")
   // Animation variant: "fade" | "slide" | "scale" | "bounce" | "none"
   animationVariant String   @default("fade")
+  // Contact info
+  contactEmail          String?
+  contactEmailVisible   Boolean  @default(true)
+  contactTelegram       String?
+  contactTelegramVisible Boolean @default(true)
+  contactViber          String?
+  contactViberVisible   Boolean  @default(false)
+  contactWhatsapp       String?
+  contactWhatsappVisible Boolean @default(false)
   updatedAt        DateTime @updatedAt
 
   @@map("site_settings")
