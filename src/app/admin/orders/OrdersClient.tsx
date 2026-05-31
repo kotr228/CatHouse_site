@@ -1,8 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
-import { signOut } from 'next-auth/react';
 
 type OrderStatus = 'NEW' | 'IN_PROGRESS' | 'COMPLETED' | 'CANCELLED';
 
@@ -71,56 +69,10 @@ export default function AdminOrdersClient({ orders: initialOrders, stats }: Admi
   };
 
   return (
-    <div className="min-h-screen flex">
-      {/* Sidebar */}
-      <aside className="w-64 bg-navy-900 border-r border-white/10 flex flex-col">
-        <div className="p-6 border-b border-white/10">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center">
-              <span className="text-white font-bold text-sm">D</span>
-            </div>
-            <span className="text-white font-bold">DevStudio</span>
-          </div>
-        </div>
-        <nav className="flex-1 p-4 space-y-1">
-          <Link
-            href="/admin/orders"
-            className="flex items-center gap-3 px-3 py-2 rounded-lg bg-brand-600/20 text-brand-300 text-sm font-medium"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-            </svg>
-            Orders
-          </Link>
-          <Link
-            href="/admin/services"
-            className="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 text-sm font-medium transition-colors"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-            </svg>
-            Services
-          </Link>
-        </nav>
-        <div className="p-4 border-t border-white/10">
-          <button
-            onClick={() => signOut({ callbackUrl: '/admin/login' })}
-            className="w-full flex items-center gap-2 px-3 py-2 text-gray-400 hover:text-red-400 text-sm transition-colors"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-            </svg>
-            Logout
-          </button>
-        </div>
-      </aside>
-
-      {/* Main */}
-      <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Header */}
-        <header className="bg-navy-900 border-b border-white/10 px-6 py-4">
-          <h1 className="text-xl font-bold text-white">Orders</h1>
-        </header>
+    <div className="flex-1 flex flex-col overflow-hidden">
+      <header className="bg-slate-900 border-b border-white/10 px-6 py-4">
+        <h1 className="text-xl font-bold text-white">Orders</h1>
+      </header>
 
         <div className="flex-1 overflow-auto p-6">
           {/* Stats */}

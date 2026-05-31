@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { SessionProvider } from './SessionProvider';
+import AdminShell from '@/components/admin/AdminShell';
 
 export const metadata: Metadata = {
   title: 'Admin — DevStudio',
@@ -8,8 +9,10 @@ export const metadata: Metadata = {
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#0f172a', color: '#f8fafc' }}>
-      <SessionProvider>{children}</SessionProvider>
-    </div>
+    <SessionProvider>
+      <AdminShell>
+        {children}
+      </AdminShell>
+    </SessionProvider>
   );
 }
