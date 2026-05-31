@@ -14,6 +14,14 @@ interface SiteSettings {
   logoImageUrl?: string | null;
   siteName: string;
   siteTagline: string;
+  contactEmail?: string | null;
+  contactEmailVisible?: boolean;
+  contactTelegram?: string | null;
+  contactTelegramVisible?: boolean;
+  contactViber?: string | null;
+  contactViberVisible?: boolean;
+  contactWhatsapp?: string | null;
+  contactWhatsappVisible?: boolean;
 }
 
 const SiteSettingsContext = createContext<SiteSettings>({

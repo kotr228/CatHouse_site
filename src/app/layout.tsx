@@ -38,6 +38,14 @@ async function getSettings() {
       logoImageUrl: settings.logoImageUrl,
       siteName: settings.siteName,
       siteTagline: settings.siteTagline,
+      contactEmail: settings.contactEmail,
+      contactEmailVisible: settings.contactEmailVisible,
+      contactTelegram: settings.contactTelegram,
+      contactTelegramVisible: settings.contactTelegramVisible,
+      contactViber: settings.contactViber,
+      contactViberVisible: settings.contactViberVisible,
+      contactWhatsapp: settings.contactWhatsapp,
+      contactWhatsappVisible: settings.contactWhatsappVisible,
     };
   } catch {
     return defaultSettings;
