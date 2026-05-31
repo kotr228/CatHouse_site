@@ -59,7 +59,7 @@ export default function OrderForm({ locale }: OrderFormProps) {
     <form onSubmit={handleSubmit} className="space-y-5">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-1.5">
+          <label htmlFor="name" className="block text-sm font-medium text-text-muted mb-1.5">
             {t('name')} *
           </label>
           <input
@@ -69,12 +69,15 @@ export default function OrderForm({ locale }: OrderFormProps) {
             required
             value={form.name}
             onChange={handleChange}
-            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors"
+            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-text-base placeholder-text-muted focus:outline-none focus:ring-1 transition-colors"
+            style={{ ['--tw-ring-color' as string]: 'var(--color-primary)' } as React.CSSProperties}
+            onFocus={(e) => { e.target.style.borderColor = 'var(--color-primary)'; }}
+            onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; }}
             placeholder="John Doe"
           />
         </div>
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1.5">
+          <label htmlFor="email" className="block text-sm font-medium text-text-muted mb-1.5">
             {t('email')} *
           </label>
           <input
@@ -84,14 +87,16 @@ export default function OrderForm({ locale }: OrderFormProps) {
             required
             value={form.email}
             onChange={handleChange}
-            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors"
+            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-text-base placeholder-text-muted focus:outline-none transition-colors"
+            onFocus={(e) => { e.target.style.borderColor = 'var(--color-primary)'; }}
+            onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; }}
             placeholder="john@example.com"
           />
         </div>
       </div>
 
       <div>
-        <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-1.5">
+        <label htmlFor="phone" className="block text-sm font-medium text-text-muted mb-1.5">
           {t('phone')}
         </label>
         <input
@@ -100,13 +105,15 @@ export default function OrderForm({ locale }: OrderFormProps) {
           type="tel"
           value={form.phone}
           onChange={handleChange}
-          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors"
+          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-text-base placeholder-text-muted focus:outline-none transition-colors"
+          onFocus={(e) => { e.target.style.borderColor = 'var(--color-primary)'; }}
+          onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; }}
           placeholder="+1 (555) 000-0000"
         />
       </div>
 
       <div>
-        <label htmlFor="description" className="block text-sm font-medium text-gray-300 mb-1.5">
+        <label htmlFor="description" className="block text-sm font-medium text-text-muted mb-1.5">
           {t('description')} *
         </label>
         <textarea
@@ -116,7 +123,9 @@ export default function OrderForm({ locale }: OrderFormProps) {
           rows={5}
           value={form.description}
           onChange={handleChange}
-          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors resize-none"
+          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-text-base placeholder-text-muted focus:outline-none transition-colors resize-none"
+          onFocus={(e) => { e.target.style.borderColor = 'var(--color-primary)'; }}
+          onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; }}
           placeholder={t('descriptionPlaceholder')}
         />
       </div>
@@ -128,7 +137,8 @@ export default function OrderForm({ locale }: OrderFormProps) {
       <button
         type="submit"
         disabled={status === 'sending'}
-        className="w-full py-3.5 bg-brand-600 hover:bg-brand-500 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold rounded-xl transition-colors"
+        className="w-full py-3.5 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold rounded-xl transition-colors"
+        style={{ backgroundColor: 'var(--color-primary)' }}
       >
         {status === 'sending' ? t('sending') : t('submit')}
       </button>

@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import ServiceCard from '@/components/ServiceCard';
+import AnimationWrapper from '@/components/AnimationWrapper';
 import prisma from '@/lib/prisma';
 import type { Locale } from '@/i18n';
 
@@ -51,55 +52,91 @@ export default async function HomePage({ params: { locale } }: PageProps) {
     },
   }).catch(() => []);
 
+  // Fetch animation variant from settings
+  let animationVariant: 'fade' | 'slide' | 'scale' | 'bounce' | 'none' = 'fade';
+  try {
+    const settings = await prisma.siteSettings.findUnique({ where: { id: 'singleton' } });
+    if (settings?.animationVariant) {
+      animationVariant = settings.animationVariant as typeof animationVariant;
+    }
+  } catch {
+    // Use default
+  }
+
   return (
     <>
       {/* Hero */}
-      <section className="relative min-h-[90vh] flex items-center bg-gradient-hero overflow-hidden">
+      <section
+        className="relative min-h-[90vh] flex items-center overflow-hidden"
+        style={{ background: 'linear-gradient(135deg, var(--color-bg) 0%, var(--color-bg-card) 40%, color-mix(in srgb, var(--color-primary) 20%, var(--color-bg-card)) 100%)' }}
+      >
         {/* Background decoration */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-brand-600/20 rounded-full blur-3xl" />
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-brand-800/20 rounded-full blur-3xl" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-navy-800/10 rounded-full blur-3xl" />
+          <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full blur-3xl opacity-20"
+            style={{ backgroundColor: 'var(--color-primary)' }} />
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full blur-3xl opacity-10"
+            style={{ backgroundColor: 'var(--color-secondary)' }} />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-3xl opacity-5"
+            style={{ backgroundColor: 'var(--color-bg-card)' }} />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 bg-brand-500/10 border border-brand-500/20 rounded-full px-4 py-1.5 mb-6">
-              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse-slow" />
-              <span className="text-brand-300 text-sm font-medium">Available for new projects</span>
-            </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6">
-              {t('hero.title')}
-            </h1>
-            <p className="text-lg sm:text-xl text-gray-300 mb-8 leading-relaxed">
-              {t('hero.subtitle')}
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Link
-                href={`/${locale}/contact`}
-                className="px-8 py-3.5 bg-brand-600 hover:bg-brand-500 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-brand-600/30 hover:shadow-brand-500/40"
+            <AnimationWrapper variant={animationVariant} delay={0}>
+              <div
+                className="inline-flex items-center gap-2 border rounded-full px-4 py-1.5 mb-6"
+                style={{
+                  backgroundColor: 'color-mix(in srgb, var(--color-primary) 10%, transparent)',
+                  borderColor: 'color-mix(in srgb, var(--color-primary) 20%, transparent)',
+                }}
               >
-                {t('hero.cta')}
-              </Link>
-              <Link
-                href={`/${locale}/services`}
-                className="px-8 py-3.5 bg-white/10 hover:bg-white/15 text-white font-semibold rounded-xl transition-all duration-200 border border-white/10"
-              >
-                {t('hero.ctaSecondary')}
-              </Link>
-            </div>
+                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                <span className="text-sm font-medium" style={{ color: 'var(--color-primary)' }}>
+                  Available for new projects
+                </span>
+              </div>
+            </AnimationWrapper>
+            <AnimationWrapper variant={animationVariant} delay={100}>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-text-base leading-tight mb-6">
+                {t('hero.title')}
+              </h1>
+            </AnimationWrapper>
+            <AnimationWrapper variant={animationVariant} delay={200}>
+              <p className="text-lg sm:text-xl text-text-muted mb-8 leading-relaxed">
+                {t('hero.subtitle')}
+              </p>
+            </AnimationWrapper>
+            <AnimationWrapper variant={animationVariant} delay={300}>
+              <div className="flex flex-wrap gap-4">
+                <Link
+                  href={`/${locale}/contact`}
+                  className="px-8 py-3.5 text-white font-semibold rounded-xl transition-all duration-200"
+                  style={{ backgroundColor: 'var(--color-primary)' }}
+                >
+                  {t('hero.cta')}
+                </Link>
+                <Link
+                  href={`/${locale}/services`}
+                  className="px-8 py-3.5 bg-white/10 hover:bg-white/15 text-text-base font-semibold rounded-xl transition-all duration-200 border border-white/10"
+                >
+                  {t('hero.ctaSecondary')}
+                </Link>
+              </div>
+            </AnimationWrapper>
           </div>
         </div>
       </section>
 
       {/* Stats */}
-      <section className="bg-navy-900 border-y border-white/5 py-12">
+      <section className="bg-bg-card border-y border-white/5 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat) => (
               <div key={stat.key} className="text-center">
-                <div className="text-3xl font-extrabold text-brand-400 mb-1">{stat.value}</div>
-                <div className="text-sm text-gray-400">{t(`stats.${stat.key}`)}</div>
+                <div className="text-3xl font-extrabold mb-1" style={{ color: 'var(--color-primary)' }}>
+                  {stat.value}
+                </div>
+                <div className="text-sm text-text-muted">{t(`stats.${stat.key}`)}</div>
               </div>
             ))}
           </div>
@@ -109,25 +146,28 @@ export default async function HomePage({ params: { locale } }: PageProps) {
       {/* Services preview */}
       <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">{t('services.title')}</h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">{t('services.subtitle')}</p>
+          <h2 className="text-3xl sm:text-4xl font-bold text-text-base mb-4">{t('services.title')}</h2>
+          <p className="text-text-muted text-lg max-w-2xl mx-auto">{t('services.subtitle')}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service) => {
+          {services.map((service, index) => {
             const translation = service.translations[0];
             if (!translation) return null;
+            const price = service.prices[0];
             return (
-              <ServiceCard
-                key={service.id}
-                slug={service.slug}
-                icon={service.icon}
-                title={translation.title}
-                description={translation.description}
-                features={translation.features}
-                locale={locale as Locale}
-                learnMoreLabel={t('services.learnMore')}
-              />
+              <AnimationWrapper key={service.id} variant={animationVariant} delay={index * 150}>
+                <ServiceCard
+                  slug={service.slug}
+                  icon={service.icon}
+                  title={translation.title}
+                  description={translation.description}
+                  features={translation.features}
+                  locale={locale as Locale}
+                  learnMoreLabel={t('services.learnMore')}
+                  startingPrice={price ? { amount: price.amount.toString(), currency: price.currency } : null}
+                />
+              </AnimationWrapper>
             );
           })}
         </div>
@@ -135,7 +175,11 @@ export default async function HomePage({ params: { locale } }: PageProps) {
         <div className="text-center mt-10">
           <Link
             href={`/${locale}/services`}
-            className="inline-flex items-center gap-2 px-6 py-3 border border-brand-500/30 hover:border-brand-500 text-brand-400 hover:text-brand-300 rounded-xl transition-all duration-200"
+            className="inline-flex items-center gap-2 px-6 py-3 border rounded-xl transition-all duration-200 text-sm font-medium"
+            style={{
+              borderColor: 'color-mix(in srgb, var(--color-primary) 30%, transparent)',
+              color: 'var(--color-primary)',
+            }}
           >
             {t('services.allServices')}
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -146,13 +190,17 @@ export default async function HomePage({ params: { locale } }: PageProps) {
       </section>
 
       {/* CTA Banner */}
-      <section className="bg-gradient-to-r from-brand-800 to-navy-800 border-y border-brand-700/30 py-16">
+      <section
+        className="border-y border-white/10 py-16"
+        style={{ background: 'linear-gradient(to right, color-mix(in srgb, var(--color-primary) 40%, var(--color-bg-card)), color-mix(in srgb, var(--color-secondary) 40%, var(--color-bg-card)))' }}
+      >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">{t('contact.title')}</h2>
-          <p className="text-brand-200 text-lg mb-8">{t('contact.subtitle')}</p>
+          <h2 className="text-3xl font-bold text-text-base mb-4">{t('contact.title')}</h2>
+          <p className="text-text-muted text-lg mb-8">{t('contact.subtitle')}</p>
           <Link
             href={`/${locale}/contact`}
-            className="inline-flex items-center gap-2 px-8 py-3.5 bg-white text-brand-700 font-semibold rounded-xl hover:bg-brand-50 transition-colors"
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-white font-semibold rounded-xl hover:opacity-90 transition-opacity"
+            style={{ color: 'var(--color-primary)' }}
           >
             {t('hero.cta')}
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

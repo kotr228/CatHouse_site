@@ -42,10 +42,10 @@ export default async function PricingPage({ params: { locale } }: PageProps) {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
       {/* Header */}
       <div className="text-center mb-16">
-        <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-4">
+        <h1 className="text-4xl sm:text-5xl font-extrabold text-text-base mb-4">
           {t('pricing.title')}
         </h1>
-        <p className="text-gray-400 text-xl max-w-2xl mx-auto">{t('pricing.subtitle')}</p>
+        <p className="text-text-muted text-xl max-w-2xl mx-auto">{t('pricing.subtitle')}</p>
       </div>
 
       {/* Pricing grid */}
@@ -76,7 +76,7 @@ export default async function PricingPage({ params: { locale } }: PageProps) {
 
       {/* FAQ / Note */}
       <div className="mt-16 text-center">
-        <p className="text-gray-400 text-sm max-w-xl mx-auto">
+        <p className="text-text-muted text-sm max-w-xl mx-auto">
           All prices are starting rates and may vary depending on project complexity and requirements.
           Contact us for a custom quote.
         </p>

@@ -9,6 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        primary: 'var(--color-primary)',
+        secondary: 'var(--color-secondary)',
+        accent: 'var(--color-accent)',
+        bg: 'var(--color-bg)',
+        'bg-card': 'var(--color-bg-card)',
+        'text-base': 'var(--color-text)',
+        'text-muted': 'var(--color-text-muted)',
         navy: {
           50: '#e8eaf6',
           100: '#c5cae9',
@@ -35,7 +42,7 @@ const config: Config = {
           900: '#1e3a8a',
           950: '#172554',
         },
-        accent: {
+        'accent-sky': {
           DEFAULT: '#38bdf8',
           dark: '#0ea5e9',
         },

@@ -11,23 +11,23 @@ export default function Footer({ locale }: FooterProps) {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-navy-950 border-t border-white/10">
+    <footer className="bg-bg-card border-t border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, var(--color-primary), var(--color-secondary))' }}>
                 <span className="text-white font-bold text-sm">D</span>
               </div>
-              <span className="text-white font-bold text-lg">DevStudio</span>
+              <span className="text-text-base font-bold text-lg">DevStudio</span>
             </div>
-            <p className="text-gray-400 text-sm">{t('footer.tagline')}</p>
+            <p className="text-text-muted text-sm">{t('footer.tagline')}</p>
           </div>
 
           {/* Links */}
           <div>
-            <h3 className="text-white font-semibold mb-4">{t('footer.links')}</h3>
+            <h3 className="text-text-base font-semibold mb-4">{t('footer.links')}</h3>
             <ul className="space-y-2">
               {[
                 { href: `/${locale}`, label: t('nav.home') },
@@ -38,7 +38,7 @@ export default function Footer({ locale }: FooterProps) {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-gray-400 hover:text-white text-sm transition-colors"
+                    className="text-text-muted hover:text-text-base text-sm transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -49,13 +49,13 @@ export default function Footer({ locale }: FooterProps) {
 
           {/* Connect */}
           <div>
-            <h3 className="text-white font-semibold mb-4">{t('footer.connect')}</h3>
+            <h3 className="text-text-base font-semibold mb-4">{t('footer.connect')}</h3>
             <div className="flex gap-3">
               <a
                 href="https://github.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
+                className="w-9 h-9 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-text-muted hover:text-text-base transition-colors"
                 aria-label="GitHub"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -66,7 +66,7 @@ export default function Footer({ locale }: FooterProps) {
                 href="https://t.me"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
+                className="w-9 h-9 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-text-muted hover:text-text-base transition-colors"
                 aria-label="Telegram"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -78,7 +78,7 @@ export default function Footer({ locale }: FooterProps) {
         </div>
 
         <div className="mt-8 pt-8 border-t border-white/10 text-center">
-          <p className="text-gray-500 text-sm">
+          <p className="text-text-muted text-sm">
             &copy; {year} DevStudio. {t('footer.rights')}
           </p>
         </div>

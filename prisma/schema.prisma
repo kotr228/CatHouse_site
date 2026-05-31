@@ -76,3 +76,27 @@ model AdminUser {
 
   @@map("admin_users")
 }
+
+model SiteSettings {
+  id               String   @id @default("singleton")
+  // Logo & brand
+  logoText         String   @default("DevStudio")
+  logoImageUrl     String?
+  siteName         String   @default("DevStudio")
+  siteTagline      String   @default("Professional Software Development")
+  // Colors (hex values)
+  colorPrimary     String   @default("#6366f1")
+  colorSecondary   String   @default("#8b5cf6")
+  colorAccent      String   @default("#06b6d4")
+  colorBg          String   @default("#020617")
+  colorBgCard      String   @default("#0f172a")
+  colorText        String   @default("#f8fafc")
+  colorTextMuted   String   @default("#94a3b8")
+  // Background
+  bgType           String   @default("gradient")
+  // Animation variant: "fade" | "slide" | "scale" | "bounce" | "none"
+  animationVariant String   @default("fade")
+  updatedAt        DateTime @updatedAt
+
+  @@map("site_settings")
+}

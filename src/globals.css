@@ -4,8 +4,13 @@
 
 @layer base {
   :root {
-    --background: #04072a;
-    --foreground: #ffffff;
+    --color-primary: #6366f1;
+    --color-secondary: #8b5cf6;
+    --color-accent: #06b6d4;
+    --color-bg: #020617;
+    --color-bg-card: #0f172a;
+    --color-text: #f8fafc;
+    --color-text-muted: #94a3b8;
   }
 
   html {
@@ -13,8 +18,8 @@
   }
 
   body {
-    background-color: var(--background);
-    color: var(--foreground);
+    background-color: var(--color-bg);
+    color: var(--color-text);
   }
 }
 
@@ -23,3 +28,33 @@
     background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
   }
 }
+
+/* Animation keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes bounceIn {
+  0% { opacity: 0; transform: scale(0.3); }
+  50% { transform: scale(1.05); }
+  70% { transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.anim-fade { animation: fadeIn 0.6s ease forwards; }
+.anim-slide { animation: slideUp 0.6s ease forwards; }
+.anim-scale { animation: scaleIn 0.5s ease forwards; }
+.anim-bounce { animation: bounceIn 0.8s ease forwards; }
+.anim-none { opacity: 1; }
+.anim-hidden { opacity: 0; }

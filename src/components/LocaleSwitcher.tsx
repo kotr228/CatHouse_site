@@ -31,11 +31,24 @@ export default function LocaleSwitcher({ currentLocale }: LocaleSwitcherProps) {
         <button
           key={locale}
           onClick={() => handleChange(locale)}
-          className={`px-2 py-1 text-xs font-medium rounded transition-colors ${
+          className="px-2 py-1 text-xs font-medium rounded transition-colors"
+          style={
             locale === currentLocale
-              ? 'bg-brand-500 text-white'
-              : 'text-gray-300 hover:text-white hover:bg-white/10'
-          }`}
+              ? { backgroundColor: 'var(--color-primary)', color: 'white' }
+              : { color: 'var(--color-text-muted)' }
+          }
+          onMouseEnter={(e) => {
+            if (locale !== currentLocale) {
+              (e.currentTarget as HTMLElement).style.color = 'var(--color-text)';
+              (e.currentTarget as HTMLElement).style.backgroundColor = 'rgba(255,255,255,0.1)';
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (locale !== currentLocale) {
+              (e.currentTarget as HTMLElement).style.color = 'var(--color-text-muted)';
+              (e.currentTarget as HTMLElement).style.backgroundColor = '';
+            }
+          }}
           aria-label={`Switch to ${locale.toUpperCase()}`}
         >
           {localeLabels[locale]}

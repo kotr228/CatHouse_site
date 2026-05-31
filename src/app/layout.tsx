@@ -1,14 +1,51 @@
 import type { ReactNode } from 'react';
 import { Inter } from 'next/font/google';
 import '../globals.css';
+import { ThemeProvider } from '@/components/ThemeProvider';
+import prisma from '@/lib/prisma';
 
 const inter = Inter({ subsets: ['latin', 'cyrillic'], display: 'swap' });
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+const defaultSettings = {
+  colorPrimary: '#6366f1',
+  colorSecondary: '#8b5cf6',
+  colorAccent: '#06b6d4',
+  colorBg: '#020617',
+  colorBgCard: '#0f172a',
+  colorText: '#f8fafc',
+  colorTextMuted: '#94a3b8',
+};
+
+async function getSettings() {
+  try {
+    const settings = await prisma.siteSettings.upsert({
+      where: { id: 'singleton' },
+      update: {},
+      create: { id: 'singleton' },
+    });
+    return {
+      colorPrimary: settings.colorPrimary,
+      colorSecondary: settings.colorSecondary,
+      colorAccent: settings.colorAccent,
+      colorBg: settings.colorBg,
+      colorBgCard: settings.colorBgCard,
+      colorText: settings.colorText,
+      colorTextMuted: settings.colorTextMuted,
+    };
+  } catch {
+    return defaultSettings;
+  }
+}
+
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  const settings = await getSettings();
+
   return (
     <html className="scroll-smooth">
-      <body className={`${inter.className} bg-slate-950 text-white antialiased`}>
-        {children}
+      <body className={`${inter.className} antialiased`}>
+        <ThemeProvider settings={settings}>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

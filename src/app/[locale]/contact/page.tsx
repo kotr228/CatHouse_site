@@ -30,10 +30,10 @@ export default async function ContactPage({ params: { locale } }: PageProps) {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
         {/* Left side - info */}
         <div>
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-4">
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-text-base mb-4">
             {t('contact.title')}
           </h1>
-          <p className="text-gray-400 text-lg mb-10">{t('contact.subtitle')}</p>
+          <p className="text-text-muted text-lg mb-10">{t('contact.subtitle')}</p>
 
           <div className="space-y-6">
             {[
@@ -61,8 +61,8 @@ export default async function ContactPage({ params: { locale } }: PageProps) {
               <div key={item.title} className="flex gap-4">
                 <div className="text-2xl">{item.icon}</div>
                 <div>
-                  <h3 className="text-white font-semibold mb-1">{item.title}</h3>
-                  <p className="text-gray-400 text-sm">{item.desc}</p>
+                  <h3 className="text-text-base font-semibold mb-1">{item.title}</h3>
+                  <p className="text-text-muted text-sm">{item.desc}</p>
                 </div>
               </div>
             ))}
