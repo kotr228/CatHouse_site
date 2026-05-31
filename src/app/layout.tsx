@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import type { ReactNode } from 'react';
 import { Inter } from 'next/font/google';
 import '../globals.css';
