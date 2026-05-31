@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Order {
+  id          String      @id @default(cuid())
+  name        String
+  email       String
+  phone       String?
+  description String
+  status      OrderStatus @default(NEW)
+  locale      String      @default("uk")
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@map("orders")
+}
+
+enum OrderStatus {
+  NEW
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+model Service {
+  id           String               @id @default(cuid())
+  slug         String               @unique
+  icon         String?
+  order        Int                  @default(0)
+  isActive     Boolean              @default(true)
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
+  translations ServiceTranslation[]
+  prices       Price[]
+
+  @@map("services")
+}
+
+model ServiceTranslation {
+  id          String   @id @default(cuid())
+  serviceId   String
+  locale      String
+  title       String
+  description String   @db.Text
+  features    String[]
+  service     Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@unique([serviceId, locale])
+  @@map("service_translations")
+}
+
+model Price {
+  id        String   @id @default(cuid())
+  serviceId String
+  currency  String   @default("USD")
+  amount    Decimal  @db.Decimal(10, 2)
+  period    String?
+  isActive  Boolean  @default(true)
+  service   Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@map("prices")
+}
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  createdAt DateTime @default(now())
+
+  @@map("admin_users")
+}

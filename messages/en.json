@@ -1,0 +1,84 @@
+{
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "pricing": "Pricing",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Professional Software Development",
+    "subtitle": "We build fast, scalable, and SEO-optimized web & mobile applications tailored to your business needs.",
+    "cta": "Get a Free Quote",
+    "ctaSecondary": "View Services"
+  },
+  "services": {
+    "title": "Our Services",
+    "subtitle": "End-to-end software development for your business",
+    "learnMore": "Learn more",
+    "allServices": "All Services"
+  },
+  "pricing": {
+    "title": "Transparent Pricing",
+    "subtitle": "Choose the plan that fits your project",
+    "from": "from",
+    "perProject": "per project",
+    "perMonth": "per month",
+    "getStarted": "Get Started",
+    "mostPopular": "Most Popular"
+  },
+  "contact": {
+    "title": "Start Your Project",
+    "subtitle": "Tell us about your idea and we'll get back to you within 24 hours.",
+    "name": "Your Name",
+    "email": "Email Address",
+    "phone": "Phone Number (optional)",
+    "description": "Project Description",
+    "descriptionPlaceholder": "Describe your project, goals, timeline, and any specific requirements...",
+    "submit": "Send Request",
+    "sending": "Sending...",
+    "success": "Thank you! We'll contact you soon.",
+    "error": "Something went wrong. Please try again."
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "tagline": "Building digital products that matter.",
+    "links": "Quick Links",
+    "connect": "Connect"
+  },
+  "admin": {
+    "dashboard": "Dashboard",
+    "orders": "Orders",
+    "services": "Services",
+    "logout": "Logout",
+    "login": "Login",
+    "loginTitle": "Admin Login",
+    "email": "Email",
+    "password": "Password",
+    "loginButton": "Sign In",
+    "totalOrders": "Total Orders",
+    "newOrders": "New Orders",
+    "inProgress": "In Progress",
+    "completed": "Completed",
+    "status": "Status",
+    "name": "Name",
+    "createdAt": "Created At",
+    "actions": "Actions",
+    "updateStatus": "Update Status"
+  },
+  "meta": {
+    "homeTitle": "DevStudio — Professional Software Development",
+    "homeDescription": "We build fast, scalable web and mobile apps. Next.js, React, Node.js, PostgreSQL. Get a free quote today.",
+    "servicesTitle": "Services — DevStudio",
+    "servicesDescription": "Explore our full range of software development services: web apps, mobile apps, APIs, and more.",
+    "pricingTitle": "Pricing — DevStudio",
+    "pricingDescription": "Transparent pricing for software development services. No hidden fees.",
+    "contactTitle": "Contact — DevStudio",
+    "contactDescription": "Start your project today. Fill in the form and get a free consultation."
+  },
+  "stats": {
+    "projects": "Projects Delivered",
+    "clients": "Happy Clients",
+    "years": "Years Experience",
+    "uptime": "Uptime SLA"
+  }
+}
