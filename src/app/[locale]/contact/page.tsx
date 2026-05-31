@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import OrderForm from '@/components/OrderForm';
 import { locales, type Locale } from '@/i18n';
 import prisma from '@/lib/prisma';
+import { getSiteName } from '@/lib/getSiteName';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,9 +17,12 @@ interface PageProps {
 }
 
 export async function generateMetadata({ params: { locale } }: PageProps): Promise<Metadata> {
-  const t = await getTranslations({ locale, namespace: 'meta' });
+  const [t, siteName] = await Promise.all([
+    getTranslations({ locale, namespace: 'meta' }),
+    getSiteName(),
+  ]);
   return {
-    title: t('contactTitle'),
+    title: `${t('contactTitle')} | ${siteName}`,
     description: t('contactDescription'),
   };
 }

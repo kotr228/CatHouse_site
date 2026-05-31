@@ -4,6 +4,7 @@ import Link from 'next/link';
 import ServiceCard from '@/components/ServiceCard';
 import AnimationWrapper from '@/components/AnimationWrapper';
 import prisma from '@/lib/prisma';
+import { getSiteName } from '@/lib/getSiteName';
 import type { Locale } from '@/i18n';
 
 import { locales } from '@/i18n';
@@ -19,9 +20,12 @@ interface PageProps {
 }
 
 export async function generateMetadata({ params: { locale } }: PageProps): Promise<Metadata> {
-  const t = await getTranslations({ locale, namespace: 'meta' });
+  const [t, siteName] = await Promise.all([
+    getTranslations({ locale, namespace: 'meta' }),
+    getSiteName(),
+  ]);
   return {
-    title: t('homeTitle'),
+    title: siteName,
     description: t('homeDescription'),
   };
 }

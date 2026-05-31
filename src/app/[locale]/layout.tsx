@@ -10,6 +10,7 @@ import { locales, type Locale } from '@/i18n';
 import { AnimationContextProvider } from '@/components/AnimationContext';
 import PageTransition from '@/components/PageTransition';
 import prisma from '@/lib/prisma';
+import { getSiteName } from '@/lib/getSiteName';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -20,15 +21,6 @@ export const dynamic = 'force-dynamic';
 
 export async function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
-}
-
-async function getSiteName(): Promise<string> {
-  try {
-    const s = await prisma.siteSettings.findUnique({ where: { id: 'singleton' } });
-    return s?.siteName || 'DevStudio';
-  } catch {
-    return process.env.NEXT_PUBLIC_SITE_NAME || 'DevStudio';
-  }
 }
 
 export async function generateMetadata({ params: { locale } }: LayoutProps): Promise<Metadata> {

@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import prisma from '@/lib/prisma';
+import { getSiteName } from '@/lib/getSiteName';
 import { locales, type Locale } from '@/i18n';
 
 export const dynamic = 'force-dynamic';
@@ -15,9 +16,12 @@ interface PageProps {
 }
 
 export async function generateMetadata({ params: { locale } }: PageProps): Promise<Metadata> {
-  const t = await getTranslations({ locale, namespace: 'meta' });
+  const [t, siteName] = await Promise.all([
+    getTranslations({ locale, namespace: 'meta' }),
+    getSiteName(),
+  ]);
   return {
-    title: t('servicesTitle'),
+    title: `${t('servicesTitle')} | ${siteName}`,
     description: t('servicesDescription'),
   };
 }
