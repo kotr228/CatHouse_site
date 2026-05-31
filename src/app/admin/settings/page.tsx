@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
@@ -62,6 +62,8 @@ export default function AdminSettingsPage() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState('');
+  const [logoUploading, setLogoUploading] = useState(false);
+  const logoInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -105,6 +107,22 @@ export default function AdminSettingsPage() {
 
   const handleChange = (key: keyof SettingsForm, value: string) => {
     setForm((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 2 * 1024 * 1024) {
+      setError('Logo file must be under 2 MB.');
+      return;
+    }
+    setLogoUploading(true);
+    const reader = new FileReader();
+    reader.onload = () => {
+      handleChange('logoImageUrl', reader.result as string);
+      setLogoUploading(false);
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleSave = async () => {
@@ -153,31 +171,46 @@ export default function AdminSettingsPage() {
             <h2 className="text-lg font-semibold text-white mb-4">Brand &amp; Logo</h2>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-slate-400 mb-1.5">Logo Image URL</label>
-                <div className="flex items-center gap-3">
-                  {form.logoImageUrl && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={form.logoImageUrl} alt="Logo preview" className="w-10 h-10 rounded-lg object-contain bg-white/5 border border-white/10" />
-                  )}
-                  <input
-                    type="url"
-                    value={form.logoImageUrl}
-                    placeholder="https://example.com/logo.png (leave empty to use text)"
-                    onChange={(e) => handleChange('logoImageUrl', e.target.value)}
-                    className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-indigo-500 transition-colors placeholder:text-slate-600"
-                  />
-                  {form.logoImageUrl && (
+                <label className="block text-sm font-medium text-slate-400 mb-1.5">Logo Image</label>
+                <div className="flex items-center gap-4">
+                  {/* Preview */}
+                  <div className="w-16 h-16 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center overflow-hidden flex-shrink-0">
+                    {form.logoImageUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={form.logoImageUrl} alt="Logo" className="w-full h-full object-contain" />
+                    ) : (
+                      <span className="text-slate-500 text-xs text-center px-1">No logo</span>
+                    )}
+                  </div>
+                  {/* Controls */}
+                  <div className="flex flex-col gap-2">
+                    <input
+                      ref={logoInputRef}
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleLogoUpload}
+                    />
                     <button
                       type="button"
-                      onClick={() => handleChange('logoImageUrl', '')}
-                      className="text-slate-400 hover:text-white px-2 py-2"
-                      title="Remove logo image"
+                      disabled={logoUploading}
+                      onClick={() => logoInputRef.current?.click()}
+                      className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-60 text-white text-sm font-medium rounded-lg transition-colors"
                     >
-                      ✕
+                      {logoUploading ? 'Uploading...' : form.logoImageUrl ? 'Change Logo' : 'Upload Logo'}
                     </button>
-                  )}
+                    {form.logoImageUrl && (
+                      <button
+                        type="button"
+                        onClick={() => { handleChange('logoImageUrl', ''); if (logoInputRef.current) logoInputRef.current.value = ''; }}
+                        className="px-4 py-2 bg-red-600/20 hover:bg-red-600/40 text-red-400 text-sm font-medium rounded-lg transition-colors border border-red-500/20"
+                      >
+                        Remove Logo
+                      </button>
+                    )}
+                  </div>
                 </div>
-                <p className="text-xs text-slate-500 mt-1">If set, the image will be shown instead of the colored icon.</p>
+                <p className="text-xs text-slate-500 mt-2">PNG, SVG, WebP · max 2 MB. If not set, a colored icon with the first letter of Logo Text is used.</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-400 mb-1.5">Logo Text</label>

@@ -81,7 +81,7 @@ model SiteSettings {
   id               String   @id @default("singleton")
   // Logo & brand
   logoText         String   @default("DevStudio")
-  logoImageUrl     String?
+  logoImageUrl     String? @db.Text
   siteName         String   @default("DevStudio")
   siteTagline      String   @default("Professional Software Development")
   // Colors (hex values)
