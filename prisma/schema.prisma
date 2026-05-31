@@ -100,3 +100,36 @@ model SiteSettings {
 
   @@map("site_settings")
 }
+
+model HeroContent {
+  id           String @id
+  locale       String @unique
+  title        String @db.Text
+  subtitle     String @db.Text
+  ctaPrimary   String
+  ctaSecondary String
+
+  @@map("hero_content")
+}
+
+model StatItem {
+  id        String  @id @default(cuid())
+  value     String
+  labelUk   String
+  labelEn   String
+  labelPl   String
+  labelLt   String
+  order     Int     @default(0)
+  isVisible Boolean @default(true)
+
+  @@map("stat_items")
+}
+
+model PageBlock {
+  id        String  @id
+  label     String
+  isVisible Boolean @default(true)
+  order     Int     @default(0)
+
+  @@map("page_blocks")
+}

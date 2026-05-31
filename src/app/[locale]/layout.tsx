@@ -7,6 +7,9 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import JsonLd, { getOrganizationJsonLd } from '@/components/JsonLd';
 import { locales, type Locale } from '@/i18n';
+import { AnimationContextProvider } from '@/components/AnimationContext';
+import PageTransition from '@/components/PageTransition';
+import prisma from '@/lib/prisma';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -61,13 +64,25 @@ export default async function LocaleLayout({ children, params: { locale } }: Lay
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://cathouse-site.onrender.com';
   const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'DevStudio';
 
+  let animationVariant = 'fade';
+  try {
+    const settings = await prisma.siteSettings.findUnique({ where: { id: 'singleton' } });
+    if (settings?.animationVariant) animationVariant = settings.animationVariant;
+  } catch {
+    // Use default
+  }
+
   return (
     <>
       <JsonLd data={getOrganizationJsonLd(siteUrl, siteName)} />
       <NextIntlClientProvider messages={messages}>
-        <Header locale={locale as Locale} />
-        <main className="min-h-screen pt-16">{children}</main>
-        <Footer locale={locale as Locale} />
+        <AnimationContextProvider value={animationVariant}>
+          <Header locale={locale as Locale} />
+          <main className="min-h-screen pt-16">
+            <PageTransition variant={animationVariant}>{children}</PageTransition>
+          </main>
+          <Footer locale={locale as Locale} />
+        </AnimationContextProvider>
       </NextIntlClientProvider>
     </>
   );
