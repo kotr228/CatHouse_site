@@ -11,6 +11,7 @@ import { AnimationContextProvider } from '@/components/AnimationContext';
 import PageTransition from '@/components/PageTransition';
 import prisma from '@/lib/prisma';
 import { getSiteName } from '@/lib/getSiteName';
+import { siteUrl, buildAlternates, buildOpenGraph, buildTwitter } from '@/lib/seo';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -28,37 +29,34 @@ export async function generateMetadata({ params: { locale } }: LayoutProps): Pro
     getTranslations({ locale, namespace: 'meta' }),
     getSiteName(),
   ]);
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://cathouse-site.onrender.com';
+  const description = t('homeDescription');
 
   return {
     title: {
       default: siteName,
       template: `%s | ${siteName}`,
     },
-    description: t('homeDescription'),
+    description,
     metadataBase: new URL(siteUrl),
-    alternates: {
-      canonical: `${siteUrl}/${locale}`,
-      languages: Object.fromEntries(
-        locales.map((l) => [l, `${siteUrl}/${l}`])
-      ),
-    },
-    openGraph: {
-      type: 'website',
-      locale,
-      siteName,
-      title: siteName,
-      description: t('homeDescription'),
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: siteName,
-      description: t('homeDescription'),
-    },
+    alternates: buildAlternates(locale as Locale, ''),
+    openGraph: buildOpenGraph({ locale: locale as Locale, siteName, title: siteName, description, path: '' }),
+    twitter: buildTwitter({ title: siteName, description }),
     robots: {
       index: true,
       follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
     },
+    formatDetection: {
+      telephone: false,
+    },
+    ...(process.env.GOOGLE_SITE_VERIFICATION
+      ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } }
+      : {}),
   };
 }
 
@@ -67,21 +65,39 @@ export default async function LocaleLayout({ children, params: { locale } }: Lay
   setRequestLocale(locale);
 
   const messages = await getMessages();
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://cathouse-site.onrender.com';
 
   let animationVariant = 'fade';
   let siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'DevStudio';
+  let jsonLdEmail: string | null = null;
+  const sameAs: string[] = [];
   try {
     const settings = await prisma.siteSettings.findUnique({ where: { id: 'singleton' } });
     if (settings?.animationVariant) animationVariant = settings.animationVariant;
     if (settings?.siteName) siteName = settings.siteName;
+    if (settings?.contactEmailVisible && settings.contactEmail) jsonLdEmail = settings.contactEmail;
+    if (settings?.contactTelegramVisible && settings.contactTelegram) {
+      sameAs.push(
+        settings.contactTelegram.startsWith('http')
+          ? settings.contactTelegram
+          : `https://t.me/${settings.contactTelegram.replace(/^@/, '')}`
+      );
+    }
+    if (settings?.contactWhatsappVisible && settings.contactWhatsapp) {
+      sameAs.push(`https://wa.me/${settings.contactWhatsapp.replace(/\D/g, '')}`);
+    }
   } catch {
     // Use defaults
   }
 
   return (
     <>
-      <JsonLd data={getOrganizationJsonLd(siteUrl, siteName)} />
+      <JsonLd
+        data={getOrganizationJsonLd(siteUrl, siteName, {
+          locale,
+          email: jsonLdEmail,
+          sameAs,
+        })}
+      />
       <NextIntlClientProvider messages={messages}>
         <AnimationContextProvider value={animationVariant}>
           <Header locale={locale as Locale} />

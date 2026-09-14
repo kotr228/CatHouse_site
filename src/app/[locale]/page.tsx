@@ -5,6 +5,7 @@ import ServiceCard from '@/components/ServiceCard';
 import AnimationWrapper from '@/components/AnimationWrapper';
 import prisma from '@/lib/prisma';
 import { getSiteName } from '@/lib/getSiteName';
+import { buildAlternates, buildOpenGraph, buildTwitter } from '@/lib/seo';
 import type { Locale } from '@/i18n';
 
 import { locales } from '@/i18n';
@@ -24,9 +25,13 @@ export async function generateMetadata({ params: { locale } }: PageProps): Promi
     getTranslations({ locale, namespace: 'meta' }),
     getSiteName(),
   ]);
+  const description = t('homeDescription');
   return {
-    title: siteName,
-    description: t('homeDescription'),
+    title: { absolute: siteName },
+    description,
+    alternates: buildAlternates(locale as Locale, ''),
+    openGraph: buildOpenGraph({ locale: locale as Locale, siteName, title: siteName, description, path: '' }),
+    twitter: buildTwitter({ title: siteName, description }),
   };
 }
 

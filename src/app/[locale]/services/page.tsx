@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import prisma from '@/lib/prisma';
 import { getSiteName } from '@/lib/getSiteName';
+import { buildAlternates, buildOpenGraph, buildTwitter } from '@/lib/seo';
 import { locales, type Locale } from '@/i18n';
 
 export const dynamic = 'force-dynamic';
@@ -20,9 +21,14 @@ export async function generateMetadata({ params: { locale } }: PageProps): Promi
     getTranslations({ locale, namespace: 'meta' }),
     getSiteName(),
   ]);
+  const title = `${t('servicesTitle')} | ${siteName}`;
+  const description = t('servicesDescription');
   return {
-    title: `${t('servicesTitle')} | ${siteName}`,
-    description: t('servicesDescription'),
+    title: { absolute: title },
+    description,
+    alternates: buildAlternates(locale as Locale, '/services'),
+    openGraph: buildOpenGraph({ locale: locale as Locale, siteName, title, description, path: '/services' }),
+    twitter: buildTwitter({ title, description }),
   };
 }
 

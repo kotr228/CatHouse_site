@@ -5,6 +5,7 @@ import OrderForm from '@/components/OrderForm';
 import { locales, type Locale } from '@/i18n';
 import prisma from '@/lib/prisma';
 import { getSiteName } from '@/lib/getSiteName';
+import { buildAlternates, buildOpenGraph, buildTwitter } from '@/lib/seo';
 
 export const dynamic = 'force-dynamic';
 
@@ -21,9 +22,14 @@ export async function generateMetadata({ params: { locale } }: PageProps): Promi
     getTranslations({ locale, namespace: 'meta' }),
     getSiteName(),
   ]);
+  const title = `${t('contactTitle')} | ${siteName}`;
+  const description = t('contactDescription');
   return {
-    title: `${t('contactTitle')} | ${siteName}`,
-    description: t('contactDescription'),
+    title: { absolute: title },
+    description,
+    alternates: buildAlternates(locale as Locale, '/contact'),
+    openGraph: buildOpenGraph({ locale: locale as Locale, siteName, title, description, path: '/contact' }),
+    twitter: buildTwitter({ title, description }),
   };
 }
 

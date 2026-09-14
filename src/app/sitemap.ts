@@ -1,20 +1,21 @@
 import { MetadataRoute } from 'next';
 import { locales } from '@/i18n';
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://cathouse-site.onrender.com';
-
-const pages = ['', '/services', '/pricing', '/contact'];
+import { routes, localizedUrl } from '@/lib/seo';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = [];
 
   for (const locale of locales) {
-    for (const page of pages) {
+    for (const route of routes) {
       entries.push({
-        url: `${siteUrl}/${locale}${page}`,
+        url: localizedUrl(locale, route),
         lastModified: new Date(),
-        changeFrequency: page === '' ? 'weekly' : 'monthly',
-        priority: page === '' ? 1.0 : 0.8,
+        changeFrequency: route === '' ? 'weekly' : 'monthly',
+        priority: route === '' ? 1.0 : 0.8,
+        // hreflang cross-links: every locale variant of this same route.
+        alternates: {
+          languages: Object.fromEntries(locales.map((l) => [l, localizedUrl(l, route)])),
+        },
       });
     }
   }

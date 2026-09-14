@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import Image from 'next/image';
 import LocaleSwitcher from './LocaleSwitcher';
+import Logo from './Logo';
 import { useSiteSettings } from './ThemeProvider';
 import type { Locale } from '@/i18n';
 
@@ -31,13 +32,13 @@ export default function Header({ locale }: HeaderProps) {
           {/* Logo */}
           <Link href={`/${locale}`} className="flex items-center gap-2">
             {logoImageUrl ? (
-              <Image src={logoImageUrl} alt={logoText} width={32} height={32} className="rounded-lg object-contain" />
+              <>
+                <Image src={logoImageUrl} alt={logoText} width={32} height={32} className="rounded-lg object-contain" />
+                <span className="font-bold text-lg text-text-base">{logoText}</span>
+              </>
             ) : (
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, var(--color-primary), var(--color-secondary))' }}>
-                <span className="text-white font-bold text-sm">{logoText.charAt(0).toUpperCase()}</span>
-              </div>
+              <Logo text={logoText} />
             )}
-            <span className="font-bold text-lg" style={{ color: 'var(--color-text)' }}>{logoText}</span>
           </Link>
 
           {/* Desktop nav */}

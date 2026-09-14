@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import type { JSX } from 'react';
 import { useTranslations } from 'next-intl';
+import Logo from './Logo';
 import { useSiteSettings } from './ThemeProvider';
 import type { Locale } from '@/i18n';
 
@@ -80,13 +81,13 @@ export default function Footer({ locale }: FooterProps) {
           <div>
             <div className="flex items-center gap-2 mb-4">
               {logoImageUrl ? (
-                <Image src={logoImageUrl} alt={logoText} width={32} height={32} className="rounded-lg object-contain" />
+                <>
+                  <Image src={logoImageUrl} alt={logoText} width={32} height={32} className="rounded-lg object-contain" />
+                  <span className="text-text-base font-bold text-lg">{logoText}</span>
+                </>
               ) : (
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, var(--color-primary), var(--color-secondary))' }}>
-                  <span className="text-white font-bold text-sm">{logoText.charAt(0).toUpperCase()}</span>
-                </div>
+                <Logo text={logoText} />
               )}
-              <span className="text-text-base font-bold text-lg">{logoText}</span>
             </div>
             <p className="text-text-muted text-sm">{t('footer.tagline')}</p>
           </div>
