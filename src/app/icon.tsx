@@ -5,47 +5,57 @@ export const dynamic = 'force-dynamic';
 export const size = { width: 32, height: 32 };
 export const contentType = 'image/png';
 
+const DATA_URL_PREFIX = 'base64,';
+
 export default async function Icon() {
-  let letter = 'D';
-  let primary = '#6366f1';
-  let secondary = '#8b5cf6';
-  let logoImageUrl: string | null = null;
-
   try {
-    const s = await prisma.siteSettings.findUnique({ where: { id: 'singleton' } });
-    if (s?.siteName) letter = s.siteName.charAt(0).toUpperCase();
-    if (s?.colorPrimary) primary = s.colorPrimary;
-    if (s?.colorSecondary) secondary = s.colorSecondary;
-    if (s?.logoImageUrl) logoImageUrl = s.logoImageUrl;
+    // 1. Fetch the singleton settings record.
+    const settings = await prisma.siteSettings.findUnique({ where: { id: 'singleton' } });
+    const logoImageUrl = settings?.logoImageUrl;
+
+    // 2. Check it exists and looks like a base64 data URL image.
+    const marker = logoImageUrl?.indexOf(DATA_URL_PREFIX) ?? -1;
+    if (logoImageUrl && logoImageUrl.startsWith('data:image/') && marker !== -1) {
+      // 3. Strip the "data:image/png;base64," prefix and decode to a Buffer.
+      const base64Data = logoImageUrl.slice(marker + DATA_URL_PREFIX.length);
+      const buffer = Buffer.from(base64Data, 'base64');
+
+      if (buffer.length > 0) {
+        // 4. Return the raw PNG bytes directly.
+        return new Response(buffer, {
+          headers: {
+            'Content-Type': 'image/png',
+            'Cache-Control': 'public, max-age=0, must-revalidate',
+          },
+        });
+      }
+    }
   } catch {
-    // Use defaults
+    // DB unreachable, query failed, etc. — fall through to the fallback below.
   }
 
-  if (logoImageUrl) {
-    return new ImageResponse(
-      <img src={logoImageUrl} width={32} height={32} style={{ borderRadius: 8, objectFit: 'contain' }} />,
-      { ...size }
-    );
-  }
-
+  // 5. Fallback: a simple generated favicon (used when the DB query fails,
+  // logoImageUrl is empty/invalid, or during the initial build phase).
   return new ImageResponse(
-    <div
-      style={{
-        width: 32,
-        height: 32,
-        borderRadius: 8,
-        background: `linear-gradient(135deg, ${primary}, ${secondary})`,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        color: 'white',
-        fontWeight: 700,
-        fontSize: 18,
-        fontFamily: 'sans-serif',
-      }}
-    >
-      {letter}
-    </div>,
+    (
+      <div
+        style={{
+          width: 32,
+          height: 32,
+          borderRadius: '50%',
+          background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'white',
+          fontWeight: 700,
+          fontSize: 18,
+          fontFamily: 'sans-serif',
+        }}
+      >
+        C
+      </div>
+    ),
     { ...size }
   );
 }
